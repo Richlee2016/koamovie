@@ -1,8 +1,8 @@
 var router = require('koa-router')()
 var koaRequest = require('koa-request')
-var prefix ='https://api.douban.com/'
+var prefix = 'https://api.douban.com/'
 var proxy = {
-    movie:prefix+ 'v2/movie/subject/'
+    movie: prefix + 'v2/movie/subject/'
 }
 router.get('/', async function(ctx, next) {
     ctx.state = {
@@ -10,6 +10,6 @@ router.get('/', async function(ctx, next) {
     };
     console.log(ctx.path);
     const result = await koaRequest(proxy.movie);
-    await ctx.render('index', { title:321 });
+    await ctx.render('index', { title: 321 });
 })
 module.exports = router;

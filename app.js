@@ -16,6 +16,7 @@ const webpack = require('webpack')
 const compiler = webpack(webpackConfig)
     //router
 const index = require('./routes/index');
+const page = require('./routes/page');
 const users = require('./routes/users');
 
 const admin = require('./routes/admin/admin');
@@ -44,6 +45,7 @@ app.use(async(ctx, next) => {
 
 //前台页面
 router.use('/', index.routes(), index.allowedMethods());
+router.use('/page', page.routes(), page.allowedMethods());
 // router.use('/users', users.routes(), users.allowedMethods());
 
 //后台页面

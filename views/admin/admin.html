@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <h1 class="display-4">List</h1>
-<div class="movie-list">
+<div class="movie-list" id="list">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -21,9 +21,9 @@
                 <td>{{item.doctor}}</td>
                 <td>{{item.country}}</td>
                 <td>{{item.year}}</td>
-                <td>{{JSON.stringify(item.meta.createAt)}}</td>
-                <td><button class="btn btn-link">查看</button></td>
-                <td><button class="btn btn-link">修改</button></td>
+                <td>{{ item.meta.createAt|date('Y-m-d')}}</td>
+                <td><a class="btn btn-link" href="../page/detail/{{item._id}}">{{item._id}}查看</a></td>
+                <td><a class="btn btn-link" href="./enter">修改</a></td>
                 <td><button class="btn btn-danger">删除</button></td>
             </tr>
             {% endfor %}
@@ -32,5 +32,8 @@
 </div>
 {% endblock %} {% block script %}
 <script>
+    var List = new Vue({
+        el: '#list',
+    });
 </script>
 {% endblock%}
