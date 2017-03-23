@@ -1,0 +1,58 @@
+{% extends 'layout.html' %} {% block content %}
+<h1 class="display-4">Enter</h1>
+<div class="admin-enter" id="enter">
+    <form method="post" action="/admin/enter/new">
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">电影名字</label>
+            <input type="text" class="form-control" name="title" placeholder="电影名字">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">电影导演</label>
+            <input type="text" class="form-control" name="doctor" placeholder="电影导演">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">国家</label>
+            <input type="text" name="country" class="form-control" placeholder="国家">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">语种</label>
+            <input type="text" name="language" class="form-control" placeholder="语种">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">海报地址</label>
+            <input type="text" name="flash" class="form-control" placeholder="海报地址">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">片源地址</label>
+            <input type="text" name="poster" class="form-control" placeholder="片源地址">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">上映年代</label>
+            <input type="text" name="year" class="form-control" placeholder="上映年代">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="exampleInputEmail1">电影简介</label>
+            <input type="text" name="summary" class="form-control" placeholder="电影简介">
+        </fieldset>
+        <button type="submit" class="btn btn-primary">保存</button>
+    </form>
+</div>
+{% endblock %}{% block script %}
+<script>
+    // var Enter = new Vue({
+    //     el: "#enter",
+    //     delimiters: ['${', '}'],
+    //     data: {
+    //         movie: {
+    //             title: "",
+    //             doctor: ""
+    //         }
+    //     },
+    //     methods: {
+    //         submit() {
+    //             console.log();
+    //         }
+    //     }
+    // })
+</script>
+{% endblock %}

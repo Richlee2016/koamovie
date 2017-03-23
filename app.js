@@ -8,18 +8,30 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
-
+//代理
+const koaproxy = require('koa-proxy')
+    //webpacky
+const webpackConfig = require('./build/webpack.base.conf');
+const webpack = require('webpack')
+const compiler = webpack(webpackConfig)
+    //router
 const index = require('./routes/index');
 const users = require('./routes/users');
 
+const admin = require('./routes/admin/admin');
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
 app.use(convert(logger()));
 app.use(require('koa-static')(__dirname + '/public'));
 
+//代理
+// app.use(koaproxy({
+//   host: 'http://dushu.xiaomi.com/'
+// }));
+
 app.use(views(__dirname + '/views', {
-    map: { html: 'ejs' }
+    map: { html: 'swig' }
 }));
 
 // logger
@@ -30,8 +42,12 @@ app.use(async(ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
+//前台页面
 router.use('/', index.routes(), index.allowedMethods());
-router.use('/users', users.routes(), users.allowedMethods());
+// router.use('/users', users.routes(), users.allowedMethods());
+
+//后台页面
+router.use('/admin', admin.routes(), admin.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response
@@ -40,6 +56,5 @@ app.on('error', function(err, ctx) {
     console.log(err)
     logger.error('server error', err, ctx);
 });
-
 
 module.exports = app;

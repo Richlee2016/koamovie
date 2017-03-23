@@ -1,0 +1,36 @@
+{% extends 'layout.html' %} {% block content %}
+<h1 class="display-4">List</h1>
+<div class="movie-list">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>电影名字</th>
+                <th>导演</th>
+                <th>国家</th>
+                <th>上映年份</th>
+                <th>录入时间</th>
+                <th>查看</th>
+                <th>更新</th>
+                <th>删除</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in movies %}
+            <tr>
+                <td>{{item.title}}</td>
+                <td>{{item.doctor}}</td>
+                <td>{{item.country}}</td>
+                <td>{{item.year}}</td>
+                <td>{{JSON.stringify(item.meta.createAt)}}</td>
+                <td><button class="btn btn-link">查看</button></td>
+                <td><button class="btn btn-link">修改</button></td>
+                <td><button class="btn btn-danger">删除</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} {% block script %}
+<script>
+</script>
+{% endblock%}

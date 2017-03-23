@@ -6,11 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/stylesheets/style.css" rel="stylesheet">
-    
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <script src="/javascripts/vue.min.js"></script>
 </head>
 
 <body>
-    <div>{{title.year}}</div>
+    {% block content %}{% endblock %}
 </body>
+{% block script %}{% endblock %}
 
 </html>

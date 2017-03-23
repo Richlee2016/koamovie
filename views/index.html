@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/stylesheets/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <div><%=title  %></div>
-</body>
-
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+<div>
+  <h1>首页</h1>
+  <a href="/admin" class="btn">admin</a>
+</div>
+{% endblock %}
