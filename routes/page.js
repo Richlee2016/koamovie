@@ -1,8 +1,17 @@
 var router = require('koa-router')();
 var Movie = require('../mongoose/models/movies');
+
+import { markReg } from '../assets/utils'
+
 router.get('/detail/:id', async function(ctx, next) {
-    console.log(ctx.params.id);
-    await ctx.render('admin/enter', { title: 321 });
+    let getId = markReg(ctx.params.id);
+    let movie = {};
+    try {
+        movie = await Movie.findById(getId);
+    } catch (err) {
+        console.log(err);
+    }
+    await ctx.render('admin/enter', { movie: movie });
 })
 
 module.exports = router;

@@ -1,12 +1,24 @@
 var router = require('koa-router')();
 var Movie = require('../../mongoose/models/movies');
 var assign = require('lodash.assign')
+
+import { markReg } from '../../assets/utils'
+
 router.get('/enter', async function(ctx, next) {
-    ctx.state = {
-        title: 'koa2 title'
-    };
-    await ctx.render('admin/enter', { title: 321 });
+    await ctx.render('admin/enter', { title: "add" });
 })
+
+router.get('/enter/:id', async function(ctx, next) {
+    let getId = markReg(ctx.params.id);
+    let movie = {};
+    try {
+        movie = await Movie.findById(getId);
+    } catch (err) {
+        console.log(err);
+    }
+    await ctx.render('admin/enter', { movie: movie });
+})
+
 
 router.post('/enter/new', async function(ctx, next) {
     var newmovie;
@@ -22,41 +34,36 @@ router.post('/enter/new', async function(ctx, next) {
             year: res.year,
         }
         //更新
-    var id = res._id;
-    console.log(res._id);
-    if (id !== undefined) {
-        console.log(0);
-        await Movie.findById(id)
-            .then((res) => {
-                newmovie = assign(res, getmovie);
-                newmovie.save(function(err) {
-                    if (err) {
-                        console.log(err);
-                    };
-                });
-            }).catch((err) => {
-                console.log(err);
-            });
-        return;
-    };
-    //保存
-    var movie = new Movie(getmovie)
-    movie.save(function(err) {
-        if (err) {
+    var id = markReg(res._id);
+    if (id.length > 0) {
+        let movie = {};
+        try {
+            movie = await Movie.findById(id);
+            newmovie = assign(movie, getmovie);
+            await newmovie.save();
+        } catch (err) {
             console.log(err);
         };
-        ctx.redirect('/admin/list');
-    });
-    await ctx.render('admin/entery', { title: 321 });
+    } else {
+        // 保存
+        var movie = new Movie(getmovie);
+        try {
+            await movie.save();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    ctx.redirect('/admin/list');
+    // await ctx.render('admin/enter', { movie: {} });
 })
 
 router.get('/list', async function(ctx, next) {
-    var movies = await Movie.fetch().exec().then(res => {
-        return res;
-    }).catch(err => {
-        console.log(err);
-    })
-
+    let idArr = [];
+    try {
+        var movies = await Movie.fetch()
+    } catch (error) {
+        console.log(error);
+    }
     await ctx.render('admin/admin', { movies: movies });
 })
 

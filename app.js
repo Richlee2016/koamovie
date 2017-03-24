@@ -7,7 +7,7 @@ const convert = require('koa-convert');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
-const logger = require('koa-logger');
+// const logger = require('koa-logger');
 //代理
 const koaproxy = require('koa-proxy')
     //webpacky
@@ -23,7 +23,7 @@ const admin = require('./routes/admin/admin');
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
-app.use(convert(logger()));
+// app.use(convert(logger()));
 app.use(require('koa-static')(__dirname + '/public'));
 
 //代理
@@ -56,7 +56,7 @@ app.use(router.routes(), router.allowedMethods());
 
 app.on('error', function(err, ctx) {
     console.log(err)
-    logger.error('server error', err, ctx);
+        // logger.error('server error', err, ctx);
 });
 
 module.exports = app;

@@ -2,57 +2,64 @@
 <h1 class="display-4">Enter</h1>
 <div class="admin-enter" id="enter">
     <form method="post" action="/admin/enter/new">
+        <input type="hidden" name="_id" value="{{movie._id|json_encode}}">
         <fieldset class="form-group">
             <label for="exampleInputEmail1">电影名字</label>
-            <input type="text" class="form-control" name="title" placeholder="电影名字">
+            <input type="text" class="form-control" name="title" placeholder="电影名字" value="{{movie.title||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">电影导演</label>
-            <input type="text" class="form-control" name="doctor" placeholder="电影导演">
+            <input type="text" class="form-control" name="doctor" placeholder="电影导演" value="{{movie.doctor||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">国家</label>
-            <input type="text" name="country" class="form-control" placeholder="国家">
+            <input type="text" name="country" class="form-control" placeholder="国家" value="{{movie.country||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">语种</label>
-            <input type="text" name="language" class="form-control" placeholder="语种">
+            <input type="text" name="language" class="form-control" placeholder="语种" value="{{movie.language||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">海报地址</label>
-            <input type="text" name="flash" class="form-control" placeholder="海报地址">
+            <input type="text" name="flash" class="form-control" placeholder="海报地址" value="{{movie.flash||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">片源地址</label>
-            <input type="text" name="poster" class="form-control" placeholder="片源地址">
+            <input type="text" name="poster" class="form-control" placeholder="片源地址" value="{{movie.poster||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">上映年代</label>
-            <input type="text" name="year" class="form-control" placeholder="上映年代">
+            <input type="text" name="year" v-model="year" class="form-control" placeholder="上映年代" value="{{movie.year||" "}}">
         </fieldset>
         <fieldset class="form-group">
             <label for="exampleInputEmail1">电影简介</label>
-            <input type="text" name="summary" class="form-control" placeholder="电影简介">
+            <input type="text" name="summary" class="form-control" placeholder="电影简介" value="{{movie.summary||" "}}">
         </fieldset>
-        <button type="submit" class="btn btn-primary">保存</button>
+        <button type="button" class="btn btn-primary" @click="submit">保存</button>
     </form>
 </div>
 {% endblock %}{% block script %}
 <script>
-    // var Enter = new Vue({
-    //     el: "#enter",
-    //     delimiters: ['${', '}'],
-    //     data: {
-    //         movie: {
-    //             title: "",
-    //             doctor: ""
-    //         }
-    //     },
-    //     methods: {
-    //         submit() {
-    //             console.log();
-    //         }
-    //     }
-    // })
+    var Enter = new Vue({
+        el: "#enter",
+        delimiters: ['${', '}'],
+        data: {
+            year: ""
+        },
+        methods: {
+            submit() {
+                if (typeof this.year !== Number) {
+                    alert('请输入年份');
+                };
+                axios.psot('/admin/enter/new')
+                    .then(res => {
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        }
+    })
 </script>
 {% endblock %}
