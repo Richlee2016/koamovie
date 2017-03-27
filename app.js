@@ -48,10 +48,8 @@ router.use('/', index.routes(), index.allowedMethods());
 // router.use('/page', page.routes(), page.allowedMethods());
 
 //后台页面
-const admin = require('./router/admin/page');
-const adminapi = require('./router/admin/movie/adminapi')
-router.use('/admin', admin.routes(), admin.allowedMethods());
-router.use('/adminApi', admin.routes(), admin.allowedMethods());
+const adminmovie = require('./routes/admin/movie');
+router.use('/admin/movie', adminmovie.routes(), adminmovie.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response
