@@ -14,19 +14,18 @@
                 <th>删除</th>
             </tr>
         </thead>
+        {{list}}
         <tbody>
-            {% for item in movies %}
-            <tr>
+            <tr v-for="item in list">
                 <td>{{item.title}}</td>
-                <td>{{item.doctor}}</td>
-                <td>{{item.country}}</td>
-                <td>{{item.year}}</td>
-                <td>{{ item.meta.createAt|date('Y-m-d')}}</td>
+                <td>${item.doctor}</td>
+                <td>${item.country}</td>
+                <td>${item.year}</td>
+                <td>${ item.meta.createAt}</td>
                 <td><a class="btn btn-link" href="../page/detail/{{item._id|json_encode}}">查看</a></td>
                 <td><a class="btn btn-link" href="../admin/enter/{{item._id|json_encode}}">修改</a></td>
                 <td><button class="btn btn-danger">删除</button></td>
             </tr>
-            {% endfor %}
         </tbody>
     </table>
 </div>
@@ -34,6 +33,23 @@
 <script>
     var List = new Vue({
         el: '#list',
+        // delimiters: ['${', '}'],
+        data:{
+            list:[],
+            test:0
+        },
+        mounted:function(){
+            this.$nextTick(function(){
+                axios.get('/admin/movie/api/v0/list')
+                .then(function(res){
+                    this.list = res.data;
+                    console.log(this.list);
+                })
+                .catch(function(err){
+                    console.log(err);
+                })
+            })
+        }
     });
 </script>
 {% endblock%}

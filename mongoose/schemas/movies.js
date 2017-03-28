@@ -32,9 +32,9 @@ MovieSchema.pre('save', function(next) {
 })
 
 MovieSchema.statics = {
-    fetch() {
-        return this.find({}).sort('meta.updateAt');
-    },
+    // fetch() {
+    //     return this.find({}).sort('meta.updateAt');
+    // },
     // findById(id) {
     //     return new Promise((resolve, reject) => {
     //         this.findOne({ _id: id }, function(err, movie) {

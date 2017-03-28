@@ -16,10 +16,10 @@ const webpack = require('webpack')
 const compiler = webpack(webpackConfig)
     //router
 const index = require('./routes/index');
-const page = require('./routes/page');
-const users = require('./routes/users');
+// const page = require('./routes/page');
+// const users = require('./routes/users');
 
-const admin = require('./routes/admin/admin');
+// const admin = require('./routes/admin/admin');
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
@@ -45,11 +45,11 @@ app.use(async(ctx, next) => {
 
 //前台页面
 router.use('/', index.routes(), index.allowedMethods());
-router.use('/page', page.routes(), page.allowedMethods());
-// router.use('/users', users.routes(), users.allowedMethods());
+// router.use('/page', page.routes(), page.allowedMethods());
 
 //后台页面
-router.use('/admin', admin.routes(), admin.allowedMethods());
+const adminmovie = require('./routes/admin/movie');
+router.use('/admin/movie', adminmovie.routes(), adminmovie.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response
