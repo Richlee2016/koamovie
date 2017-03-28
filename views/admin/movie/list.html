@@ -1,0 +1,51 @@
+<%- include('../layout/header') -%>
+    <h1 class="display-4">List</h1>
+    <div class="movie-list" id="list">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>电影名字</th>
+                    <th>导演</th>
+                    <th>国家</th>
+                    <th>上映年份</th>
+                    <th>录入时间</th>
+                    <th>查看</th>
+                    <th>更新</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in list">
+                    <td>{{item.title}}</td>
+                    <td>{{item.doctor}}</td>
+                    <td>{{item.country}}</td>
+                    <td>{{item.year}}</td>
+                    <td>{{ item.meta.createAt}}</td>
+                    <td><a class="btn btn-link" :href="'../page/detail/' + item._id">查看</a></td>
+                    <td><a class="btn btn-link" :href="'../movie/enter/' + item._id">修改</a></td>
+                    <td><button class="btn btn-danger" @click="del(item._id,index)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <%- include('../layout/footer') -%>
+        <script>
+            var List = new Vue({
+                el: '#list',
+                data: {
+                    list: JSON.parse('<%- JSON.stringify(movies) %>')
+                },
+                methods: {
+                    del(id, i) {
+                        this.list.splice(i, 1);
+                        axios.delete('/admin/movie/list/delete/' + id)
+                            .then(res => {
+                                alert(res.data.msg);
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                    }
+                }
+            });
+        </script>

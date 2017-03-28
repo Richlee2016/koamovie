@@ -1,0 +1,83 @@
+<%- include('../layout/header') -%>
+    <h1 class="display-4">Enter</h1>
+    <div class="admin-enter" id="enter">
+        <form>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">电影名字</label>
+                <input type="text" v-model="title" class="form-control" placeholder="电影名字">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">电影导演</label>
+                <input type="text" v-model="doctor" class="form-control" placeholder="电影导演">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">国家</label>
+                <input type="text" v-model="country" class="form-control" placeholder="国家">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">语种</label>
+                <input type="text" v-model="language" class="form-control" placeholder="语种">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">海报地址</label>
+                <input type="text" v-model="flash" class="form-control" placeholder="海报地址">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">片源地址</label>
+                <input type="text" v-model="poster" class="form-control" placeholder="片源地址">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">上映年代</label>
+                <input type="text" v-model="year" class="form-control" placeholder="上映年代">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">电影简介</label>
+                <input type="text" v-model="summary" class="form-control" placeholder="电影简介">
+            </fieldset>
+            <button type="button" class="btn btn-primary" @click="submit">保存</button>
+        </form>
+    </div>
+    <%- include('../layout/footer') -%>
+        <script>
+            var movie = JSON.parse('<%- JSON.stringify(movie)||{} %>');
+            var postData = {
+                id: movie._id,
+                title: movie.title,
+                doctor: movie.doctor,
+                country: movie.country,
+                language: movie.language,
+                flash: movie.flash,
+                poster: movie.poster,
+                year: movie.year,
+                summary: movie.summary
+            }
+
+            var enter = new Vue({
+                el: '#enter',
+                data: postData,
+                methods: {
+                    submit: function() {
+                        axios.post('/admin/movie/enter/new', {
+                                id: this.id,
+                                title: this.title,
+                                doctor: this.doctor,
+                                country: this.country,
+                                language: this.language,
+                                flash: this.flash,
+                                poster: this.poster,
+                                year: this.year,
+                                summary: this.summary
+                            })
+                            .then(res => {
+                                window.location.href = 'http://localhost:3000/admin/movie/list';
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    }
+                },
+                mounted() {
+                    console.log(this.id);
+                }
+            });
+        </script>

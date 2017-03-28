@@ -32,7 +32,7 @@ app.use(require('koa-static')(__dirname + '/public'));
 // }));
 
 app.use(views(__dirname + '/views', {
-    map: { html: 'swig' }
+    map: { html: 'ejs' }
 }));
 
 // logger
