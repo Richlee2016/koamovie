@@ -10,6 +10,6 @@ router.get('/', async function(ctx, next) {
     };
     console.log(ctx.path);
     const result = await koaRequest(proxy.movie);
-    await ctx.render('index', { title: 321, test: { one: 1, two: 2 } });
+    await ctx.render('index/movie/index', { title: 321, test: { one: 1, two: 2 } });
 })
 module.exports = router;
