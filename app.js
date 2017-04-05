@@ -1,12 +1,14 @@
 const Koa = require('koa');
 const app = new Koa();
-const router = require('koa-router')();
+// const router = require('koa-router')();
+const router = require('./routes/main');
 const views = require('koa-views');
 const co = require('co');
 const convert = require('koa-convert');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
+const fs = require('fs');
 // const logger = require('koa-logger');
 //代理
 const koaproxy = require('koa-proxy')
@@ -27,9 +29,11 @@ app.use(convert(json()));
 app.use(require('koa-static')(__dirname + '/public'));
 
 //代理
-// app.use(koaproxy({
-//   host: 'http://dushu.xiaomi.com/'
+// const douban = new Koa();
+// douban.use(koaproxy({
+//     host: 'https://api.douban.com/'
 // }));
+
 
 app.use(views(__dirname + '/views', {
     map: { html: 'ejs' }
@@ -43,13 +47,7 @@ app.use(async(ctx, next) => {
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-//前台页面
-router.use('/', index.routes(), index.allowedMethods());
-// router.use('/page', page.routes(), page.allowedMethods());
 
-//后台页面
-const adminmovie = require('./routes/admin/movie');
-router.use('/admin/movie', adminmovie.routes(), adminmovie.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response

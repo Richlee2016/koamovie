@@ -52,6 +52,26 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var List = new _vue2.default({
+	    el: '#list',
+	    data: {
+	        list: JSON.parse('<%- JSON.stringify(movies) %>')
+	    },
+	    methods: {
+	        del: function del(id, i) {
+	            this.list.splice(i, 1);
+	            axios.delete('/admin/movie/list/delete/' + id).then(function (res) {
+	                alert(res.data.msg);
+	            }).catch(function (err) {
+	                console.log(err);
+	            });
+	        }
+	    },
+	    mounted: function mounted() {
+	        console.log(this.list);
+	    }
+	});
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {

@@ -1,0 +1,112 @@
+<%- include('../layout/header') -%>
+    <div id="index">
+        <h1>首页</h1>
+        <a href="/admin/list" class="btn">admin</a>
+        <div>
+            <form>
+                <fieldset class="form-group">
+                    <label for="exampleInputEmail1">用户名</label>
+                    <input type="text" v-model="sign.username" class="form-control" placeholder="用户名">
+                </fieldset>
+                <fieldset class="form-group">
+                    <label for="exampleInputEmail1">输入密码</label>
+                    <input type="text" v-model="sign.password" class="form-control" placeholder="密码">
+                </fieldset>
+                <fieldset class="form-group" v-if="isSignIn">
+                    <label for="exampleInputEmail1">再次输入密码</label>
+                    <input type="text" v-model="sign.repassword" class="form-control" placeholder="密码">
+                </fieldset>
+                <button type="button" class="btn btn-primary" @click="signUp" v-if="isSignIn">注册</button>
+                <button type="button" class="btn btn-primary" @click="signIn">登录</button>
+                <button type="button" class="btn btn-warning" @click="cancle">取消</button>
+            </form>
+            <span @click="isSignIn = !isSignIn" n>登录</span>
+            <label>丨</label>
+            <span @click="isSignIn = !isSignIn">注册</span>
+        </div>
+        <form>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">搜索</label>
+                <input type="text" v-model="keyword" class="form-control" placeholder="输入搜索电影">
+            </fieldset>
+            <button type="button" class="btn btn-primary" @click="searchGo">搜索</button>
+        </form>
+        <ul class="search-end">
+            <li v-for="item in searchMovies">
+                <a :href="item.href">
+                    <span>{{item.score}}</span>
+                    <label>{{item.year}}</label>
+                    <img :src="item.cover">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <%- include('../layout/footer') -%>
+        <script>
+            var box = JSON.parse('<%- JSON.stringify(test) %>');
+            var box = new Vue({
+                el: "#index",
+                data: {
+                    sign: {
+                        username: "",
+                        password: "",
+                        repassword: ""
+                    },
+                    keyword: "",
+                    searchMovies: [],
+                    isSignIn: false
+                },
+                methods: {
+                    submit() {
+
+                    },
+                    cancle() {
+
+                    },
+                    searchGo() {
+                        // axios.post('/movie/search', {
+                        //         key: this.keyword
+                        //     })
+                        //     .then(res => {
+                        //         this.searchMovies = res.data;
+                        //         console.log(res.data);
+                        //     })
+                        //     .catch(err => {
+                        //         console.log(err);
+                        //     })
+                        axios.get('/movie/test')
+                            .then(res => {
+                                // this.searchMovies = res.data;
+                                console.log(res.data);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    },
+                    signUp() {
+                        axios.post('/api/users/signup', {
+                                username: this.sign.username,
+                                password: this.sign.password
+                            })
+                            .then(res => {
+                                console.log(res);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    },
+                    signIn() {
+                        axios.post('/api/users/signin', {
+                                username: this.sign.username,
+                                password: this.sign.password
+                            })
+                            .then(res => {
+                                console.log(res);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                }
+            });
+        </script>
