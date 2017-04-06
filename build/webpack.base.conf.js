@@ -10,7 +10,13 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: '[name]/enter.js'
+        filename: '[name]/enter.js',
+        movie: './src/main.js',
+        admin: './src/admin.js'
+    },
+    output: {
+        path: path.resolve(__dirname, '../movie'),
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['', '.js'],

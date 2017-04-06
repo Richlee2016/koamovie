@@ -5,6 +5,8 @@ var assign = require('lodash.assign')
 //列表
 router.get('/list', async function(ctx, next) {
     let idArr = [];
+    let user = ctx.cookies.get('user');
+    console.log(user);
     try {
         var movies = await Movie.find({}).sort('meta.updateAt');
     } catch (error) {

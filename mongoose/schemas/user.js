@@ -21,13 +21,12 @@ UserSchema.pre('save', function(next) {
         bcrypt.hash(user.password, salt, function(err, hash) {
             if (err) next(err);
             user.password = hash;
-            console.log(hash + 'rich');
             next();
         })
     })
 })
 
-UserSchema.method = {
+UserSchema.methods = {
     comparePassword(password) {
         let user = this;
         return new Promise((resolve, reject) => {

@@ -1,5 +1,6 @@
 var router = require('koa-router')();
 var Users = require('../../mongoose/models/user');
+
 //注册
 router.post('/signup', async function(ctx, next) {
     let res = ctx.request.body;
@@ -23,18 +24,24 @@ router.post('/signup', async function(ctx, next) {
 //登录
 router.post('/signin', async function(ctx, next) {
     let res = ctx.request.body;
+    let msg;
     try {
         let isUser = await Users.findOne({ username: res.username });
-
-        isUser.comparePassword()
-            .then(isMatch => {
-                console.log(isMatch);
-            })
-
-        if (isUser.password !== res.password) {
-            ctx.body = { msg: 'sorry your password is worng' }
+        if (isUser) {
+            await isUser.comparePassword(res.password)
+                .then(res => {
+                    if (res) {
+                        ctx.cookies.set('user', 'rich', 0);
+                        ctx.body = { msg: "welcome rich's home" }
+                    } else {
+                        ctx.body = { msg: 'sorry your password is worng' }
+                    };
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         } else {
-            ctx.body = { msg: "welcome rich's home" }
+            ctx.body = { msg: 'the user is not exist' }
         };
     } catch (error) {
         console.log(error);
@@ -42,8 +49,8 @@ router.post('/signin', async function(ctx, next) {
 });
 
 router.get('/list', async function(ctx, next) {
-
-    ctx.body = 'test';
+    let allUser = await Users.find({});
+    ctx.body = allUser;
 });
 
 module.exports = router;

@@ -8,6 +8,7 @@ const convert = require('koa-convert');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
+const session = require('koa-session');
 const fs = require('fs');
 // const logger = require('koa-logger');
 //代理
@@ -17,13 +18,10 @@ const webpackConfig = require('./build/webpack.base.conf');
 const webpack = require('webpack')
 const compiler = webpack(webpackConfig)
     //router
-const index = require('./routes/index');
-// const page = require('./routes/page');
-// const users = require('./routes/users');
 
-// const admin = require('./routes/admin/admin');
 // middlewares
 app.use(convert(bodyparser));
+app.use(convert(session(app)));
 app.use(convert(json()));
 // app.use(convert(logger()));
 app.use(require('koa-static')(__dirname + '/public'));

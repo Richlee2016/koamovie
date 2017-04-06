@@ -40,6 +40,22 @@
                 </a>
             </li>
         </ul>
+        <form>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">用户名</label>
+                <input type="text" v-model="username" class="form-control" placeholder="用户名">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">输入密码</label>
+                <input type="text" v-model="password" class="form-control" placeholder="密码">
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="exampleInputEmail1">再次输入密码</label>
+                <input type="text" v-model="repassword" class="form-control" placeholder="密码">
+            </fieldset>
+            <button type="button" class="btn btn-primary" @click="submit">保存</button>
+            <button type="button" class="btn btn-warning" @click="cancle">取消</button>
+        </form>
     </div>
     <%- include('../layout/footer') -%>
         <script>
@@ -54,7 +70,10 @@
                     },
                     keyword: "",
                     searchMovies: [],
-                    isSignIn: false
+                    isSignIn: false,
+                    username: "",
+                    password: "",
+                    repassword: ""
                 },
                 methods: {
                     submit() {
